@@ -1,0 +1,45 @@
+<!-- <h1>{{ error }}</h1>
+<div *ngFor="let todo of todos">
+  <input type="checkbox" name="checked" [checked]="todo.checked" (change)="updateTodoCheckbox(todo)">
+  <span *ngIf="!todo.editMode; else editMode" (click)="toggleEditMode(todo)">
+    {{ todo.title }}
+  </span>
+  <ng-template #editMode>
+    <input [(ngModel)]="todo.title" name="title" (blur)="updateTodoTitle(todo)" required>
+    <button (click)="updateTodoTitle(todo); toggleEditMode(todo)">Save</button>
+  </ng-template>
+  <div (click)="deleteTodo(todo)">delete</div>
+</div>
+<form (submit)="createTodo()">
+  <input [(ngModel)]="title" name="title" placeholder="New title" required>
+  <button type="submit">Add Todo</button>
+</form> -->
+
+
+<div *ngIf="loading">
+    
+  </div>
+  <div *ngIf="!loading && !error" >
+    <h1>{{ error }}</h1> 
+    <div *ngFor="let todo of todos">
+      <input type="checkbox" name="checked" [checked]="todo.checked" (change)="updateTodoCheckbox(todo)">
+      <span *ngIf="!todo.editMode; else editMode" (click)="toggleEditMode(todo)">
+        {{ todo.title }}
+      </span>
+      <ng-template #editMode>
+        <input [(ngModel)]="todo.title" name="title" (blur)="updateTodoTitle(todo)" required>
+        <button (click)="updateTodoTitle(todo); toggleEditMode(todo)">Save</button>
+      </ng-template>
+      <div (click)="deleteTodo(todo)">delete</div>
+    </div>
+    <form (submit)="createTodo()">
+      <input [(ngModel)]="title" name="title" placeholder="New title" required>
+      <button type="submit">Add Todo</button>
+    </form>
+  </div>
+
+ 
+
+ 
+  
+  
