@@ -16,26 +16,37 @@
 </form> -->
 
 
-<div *ngIf="loading">
-    
-  </div>
+
   <div *ngIf="!loading && !error" >
     <h1>{{ error }}</h1> 
-    <div *ngFor="let todo of todos">
-      <input type="checkbox" name="checked" [checked]="todo.checked" (change)="updateTodoCheckbox(todo)">
+    <div class="todo-item" *ngFor="let todo of todos">
+<div class="title-box">
+    <input class="input-box" type="checkbox" name="checked" [checked]="todo.checked" (change)="updateTodoCheckbox(todo)">
       <span *ngIf="!todo.editMode; else editMode" (click)="toggleEditMode(todo)">
         {{ todo.title }}
       </span>
+</div>
+      
+
       <ng-template #editMode>
         <input [(ngModel)]="todo.title" name="title" (blur)="updateTodoTitle(todo)" required>
-        <button (click)="updateTodoTitle(todo); toggleEditMode(todo)">Save</button>
+        <span (click)="updateTodoTitle(todo); toggleEditMode(todo)">
+            <svg class="save-icon" height="24" viewBox="0 -960 960 960" width="24"><path d="M840-680v480q0 33-23.5 56.5T760-120H200q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h480l160 160Zm-80 34L646-760H200v560h560v-446ZM480-240q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM240-560h360v-160H240v160Zm-40-86v446-560 114Z"/></svg>
+        </span>
       </ng-template>
-      <div (click)="deleteTodo(todo)">delete</div>
+      <div (click)="deleteTodo(todo)">
+        <svg class="delete-icon" height="24" viewBox="0 -960 960 960" width="24"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+      </div>
     </div>
-    <form (submit)="createTodo()">
+   <div class="form-wrapper">
+     <form (submit)="createTodo()">
       <input [(ngModel)]="title" name="title" placeholder="New title" required>
-      <button type="submit">Add Todo</button>
+      <button type="submit">
+        <svg class="add-icon" height="24" viewBox="0 -960 960 960" width="24"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/></svg>
+      </button>
     </form>
+   </div>
+   
   </div>
 
  

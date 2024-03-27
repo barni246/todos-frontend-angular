@@ -1,0 +1,83 @@
+
+.todo-item {
+    width: 50%;
+    height: auto;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .title-box {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+       
+        input {
+            border: none;
+            background-color: transparent;
+            border: 0px solid transparent;
+        }
+    }
+}
+
+
+.save-icon {
+    margin-top: 3px;
+    opacity: 0.3;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    transition:  175ms ease-in-out ;
+    &:hover {
+        transition:  175ms ease-in-out ;
+        opacity: 1;
+        fill:black ;
+        scale: 1.2;
+    }
+}
+
+.add-icon {
+    fill: blue;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    transition:  175ms ease-in-out ;
+    &:hover {
+        transition:  175ms ease-in-out ;
+        scale: 1.2;
+    }
+}
+
+
+.delete-icon {
+    opacity: 0.3;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    transition:  175ms ease-in-out ;
+    &:hover {
+        transition:  175ms ease-in-out ;
+        scale: 1.2;
+        opacity: 1;
+        fill:red ;
+    }
+}
+
+.form-wrapper {
+    width: 50%;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  
+}
+
+button {
+    border: unset;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+}

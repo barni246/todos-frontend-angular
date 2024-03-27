@@ -25,11 +25,11 @@ export interface Todo {
 })
 
 
-export class AllTodosComponent implements OnInit, AfterViewInit {
+export class AllTodosComponent implements OnInit {
   todos: Todo[] = []
   error: string = '';
   title: string = '';
-  newTodo: string ='';
+  newTodo: string = '';
   loading: boolean = true;
 
 
@@ -37,11 +37,9 @@ export class AllTodosComponent implements OnInit, AfterViewInit {
 
 
 
+
   
-ngAfterViewInit(): void {
-    this.loading = false;
-}
- 
+
 
 
 
@@ -75,10 +73,11 @@ ngAfterViewInit(): void {
     } catch (e) {
       this.error = 'Fehler!';
     } finally {
-      this.loading = false; // Setze loading auf false, unabhängig davon, ob die Daten geladen wurden oder ein Fehler aufgetreten ist
+      this.loading = false; 
     }
   }
 
+  
   loadTodos() {
     const headers = new HttpHeaders({
       'Authorization': `Token ${localStorage.getItem("token")}`
@@ -87,16 +86,16 @@ ngAfterViewInit(): void {
     const url = environment.baseUrl + '/todos/';
     return lastValueFrom(this.http.get<Todo[]>(url, { headers }));
   }
-  
 
 
-  
-  
+
+
+
 
 
   async updateTodoCheckbox(todo: Todo) {
     todo.checked = !todo.checked;
-  
+
     try {
       const url = `${environment.baseUrl}/todos/${todo.id}/`;
       await lastValueFrom(this.http.put(url, { checked: todo.checked }));
@@ -104,7 +103,7 @@ ngAfterViewInit(): void {
       this.error = 'Fehler beim Aktualisieren des erledigt-Status';
     }
   }
-  
+
 
   async updateTodoTitle(todo: Todo) {
     try {
@@ -114,39 +113,41 @@ ngAfterViewInit(): void {
       this.error = 'Fehler beim Aktualisieren des Titels';
     }
   }
-  
+
 
   async toggleEditMode(todo: Todo) {
     todo.editMode = !todo.editMode;
   }
-  
+
 
   async createTodo(): Promise<void> {
-    try {
-      const url = environment.baseUrl + "/todos/";
-      const body = {
-        "title": this.title,
-        "chacked": false
-      };
-     
-      const response = await lastValueFrom(this.http.post(url, body));
-      console.log('Todo created:', response);
-      this.todos = await this.loadTodos();
-      this.title = '';
-    } catch (error) {
-      console.error('Error creating todo:', error);
+    if (this.title != '') {
+      try {
+        const url = environment.baseUrl + "/todos/";
+        const body = {
+          "title": this.title,
+          "chacked": false
+        };
+
+        const response = await lastValueFrom(this.http.post(url, body));
+        console.log('Todo created:', response);
+        this.todos = await this.loadTodos();
+        this.title = '';
+      } catch (error) {
+        console.error('Error creating todo:', error);
+      }
     }
   }
-  
+
 
 
   async deleteTodo(todo: Todo) {
-  try {
-    const url = environment.baseUrl + '/todos/' + todo.id + '/';
-    await lastValueFrom(this.http.delete(url));
-    this.todos = this.todos.filter((t: { id: number; }) => t.id !== todo.id);
-  } catch (e) {
-    console.error('Error deleting todo:', e);
+    try {
+      const url = environment.baseUrl + '/todos/' + todo.id + '/';
+      await lastValueFrom(this.http.delete(url));
+      this.todos = this.todos.filter((t: { id: number; }) => t.id !== todo.id);
+    } catch (e) {
+      console.error('Error deleting todo:', e);
+    }
   }
-}
 }
