@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -31,7 +31,6 @@ export class AllTodosComponent implements OnInit {
   title: string = '';
   newTodo: string = '';
   loading: boolean = true;
-
 
   constructor(private http: HttpClient) { }
 
@@ -115,9 +114,14 @@ export class AllTodosComponent implements OnInit {
   }
 
 
-  async toggleEditMode(todo: Todo) {
-    todo.editMode = !todo.editMode;
-  }
+   async toggleEditMode(todo: Todo) {
+     todo.editMode = !todo.editMode;
+   }
+
+
+
+
+
 
 
   async createTodo(): Promise<void> {
