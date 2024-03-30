@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -36,47 +36,18 @@ export class AllTodosComponent implements OnInit {
 
 
 
-
-  
-
-
-
-
-
-
-
-  //  async ngOnInit() {
-  //    try {
-  //      this.todos = await this.loadTodos();
-  //      console.log(this.todos);
-  //    } catch (e) {
-  //      this.error = 'Fehler beim Laden!';
-  //    }
-  //  }
-
-
-  //  loadTodos() {
-  //    const headers = new HttpHeaders({
-  //      'Authorization': `Token ${localStorage.getItem("token")}`
-  //    });
-
-  //    const url = environment.baseUrl + '/todos/';
-  //    return lastValueFrom(this.http.get<Todo[]>(url, { headers }));
-  //  }
-
-
   async ngOnInit() {
     try {
       this.todos = await this.loadTodos();
-      console.log(this.todos);
+      //console.log(this.todos);
     } catch (e) {
-      this.error = 'Fehler!';
+      this.error = 'Error loading!';
     } finally {
-      this.loading = false; 
+      this.loading = false;
     }
   }
 
-  
+
   loadTodos() {
     const headers = new HttpHeaders({
       'Authorization': `Token ${localStorage.getItem("token")}`
@@ -85,43 +56,6 @@ export class AllTodosComponent implements OnInit {
     const url = environment.baseUrl + '/todos/';
     return lastValueFrom(this.http.get<Todo[]>(url, { headers }));
   }
-
-
-
-
-
-
-
-  async updateTodoCheckbox(todo: Todo) {
-    todo.checked = !todo.checked;
-
-    try {
-      const url = `${environment.baseUrl}/todos/${todo.id}/`;
-      await lastValueFrom(this.http.put(url, { checked: todo.checked }));
-    } catch (e) {
-      this.error = 'Fehler beim Aktualisieren des erledigt-Status';
-    }
-  }
-
-
-  async updateTodoTitle(todo: Todo) {
-    try {
-      const url = `${environment.baseUrl}/todos/${todo.id}/`;
-      await lastValueFrom(this.http.put(url, { title: todo.title }));
-    } catch (e) {
-      this.error = 'Fehler beim Aktualisieren des Titels';
-    }
-  }
-
-
-   async toggleEditMode(todo: Todo) {
-     todo.editMode = !todo.editMode;
-   }
-
-
-
-
-
 
 
   async createTodo(): Promise<void> {
@@ -134,7 +68,7 @@ export class AllTodosComponent implements OnInit {
         };
 
         const response = await lastValueFrom(this.http.post(url, body));
-        console.log('Todo created:', response);
+        //console.log('Todo created:', response);
         this.todos = await this.loadTodos();
         this.title = '';
       } catch (error) {
@@ -142,7 +76,6 @@ export class AllTodosComponent implements OnInit {
       }
     }
   }
-
 
 
   async deleteTodo(todo: Todo) {
@@ -154,4 +87,32 @@ export class AllTodosComponent implements OnInit {
       console.error('Error deleting todo:', e);
     }
   }
+
+
+  async updateTodoCheckbox(todo: Todo) {
+    todo.checked = !todo.checked;
+
+    try {
+      const url = `${environment.baseUrl}/todos/${todo.id}/`;
+      await lastValueFrom(this.http.put(url, { checked: todo.checked }));
+    } catch (e) {
+      this.error = 'Error updating completion status';
+    }
+  }
+
+
+  async updateTodoTitle(todo: Todo) {
+    try {
+      const url = `${environment.baseUrl}/todos/${todo.id}/`;
+      await lastValueFrom(this.http.put(url, { title: todo.title }));
+    } catch (e) {
+      this.error = 'Error updating title';
+    }
+  }
+
+
+  async toggleEditMode(todo: Todo) {
+    todo.editMode = !todo.editMode;
+  }
+
 }
