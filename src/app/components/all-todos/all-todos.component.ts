@@ -31,15 +31,14 @@ export class AllTodosComponent implements OnInit {
   title: string = '';
   newTodo: string = '';
   loading: boolean = true;
+  
 
   constructor(private http: HttpClient) { }
-
 
 
   async ngOnInit() {
     try {
       this.todos = await this.loadTodos();
-      //console.log(this.todos);
     } catch (e) {
       this.error = 'Error loading!';
     } finally {
@@ -52,7 +51,6 @@ export class AllTodosComponent implements OnInit {
     const headers = new HttpHeaders({
       'Authorization': `Token ${localStorage.getItem("token")}`
     });
-
     const url = environment.baseUrl + '/todos/';
     return lastValueFrom(this.http.get<Todo[]>(url, { headers }));
   }
@@ -66,9 +64,7 @@ export class AllTodosComponent implements OnInit {
           "title": this.title,
           "chacked": false
         };
-
         const response = await lastValueFrom(this.http.post(url, body));
-        //console.log('Todo created:', response);
         this.todos = await this.loadTodos();
         this.title = '';
       } catch (error) {
@@ -91,7 +87,6 @@ export class AllTodosComponent implements OnInit {
 
   async updateTodoCheckbox(todo: Todo) {
     todo.checked = !todo.checked;
-
     try {
       const url = `${environment.baseUrl}/todos/${todo.id}/`;
       await lastValueFrom(this.http.put(url, { checked: todo.checked }));

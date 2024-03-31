@@ -3,6 +3,13 @@
 
 .main-container {
     min-width:280px ; 
+    border: 2px solid #266dbe;
+    padding: 0px 16px 24px 16px;
+    border-radius: 5px;
+}
+
+h1 {
+    text-align: center;
 }
 
 
@@ -19,6 +26,7 @@
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
+    
 
     .title-box {
         cursor: pointer;
@@ -26,18 +34,14 @@
         align-items: center;
         gap: 8px;
        
-        input {
-        }
     }
 }
 
   .todo-title {
     display: inline-block;
-    width: 200px; /* Setzen Sie hier die gewünschte feste Breite */
+    width: 200px; 
   }
   
-
-
 
 .save-icon {
     margin-top: 3px;
