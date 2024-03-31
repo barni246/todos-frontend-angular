@@ -31,7 +31,6 @@ export class AllTodosComponent implements OnInit {
   title: string = '';
   newTodo: string = '';
   loading: boolean = true;
-  
 
   constructor(private http: HttpClient) { }
 
@@ -57,7 +56,7 @@ export class AllTodosComponent implements OnInit {
 
 
   async createTodo(): Promise<void> {
-    if (this.title != '') {
+    if (this.title.trim() !== '') {
       try {
         const url = environment.baseUrl + "/todos/";
         const body = {
@@ -97,11 +96,15 @@ export class AllTodosComponent implements OnInit {
 
 
   async updateTodoTitle(todo: Todo) {
-    try {
-      const url = `${environment.baseUrl}/todos/${todo.id}/`;
-      await lastValueFrom(this.http.put(url, { title: todo.title }));
-    } catch (e) {
-      this.error = 'Error updating title';
+    if (todo.title.trim() !== '') {
+      try {
+        const url = `${environment.baseUrl}/todos/${todo.id}/`;
+        await lastValueFrom(this.http.put(url, { title: todo.title }));
+      } catch (e) {
+        this.error = 'Error updating title';
+      }
+    } else {
+      this.deleteTodo(todo)
     }
   }
 
