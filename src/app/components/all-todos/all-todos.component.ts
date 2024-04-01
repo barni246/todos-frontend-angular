@@ -37,13 +37,11 @@ export class AllTodosComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      this.todos = await this.loadTodos();
+        this.todos = await this.loadTodos();
     } catch (e) {
-      this.error = 'Error loading!';
-    } finally {
-      this.loading = false;
-    }
-  }
+        this.error = 'Fehler beim Laden';
+    } 
+}
 
 
   loadTodos() {
@@ -52,7 +50,7 @@ export class AllTodosComponent implements OnInit {
     });
     const url = environment.baseUrl + '/todos/';
     return lastValueFrom(this.http.get<Todo[]>(url, { headers }));
-  }
+}
 
 
   async createTodo(): Promise<void> {
@@ -110,7 +108,16 @@ export class AllTodosComponent implements OnInit {
 
 
   async toggleEditMode(todo: Todo) {
-    todo.editMode = !todo.editMode;
+    let titleBefore = todo.title;
+    if (todo.title.trim() !== '') {
+      todo.editMode = !todo.editMode;
+      if (titleBefore !== this.title) {
+        this.updateTodoTitle(todo)
+      }
+    }
+    else {
+      this.deleteTodo(todo)
+    }
   }
 
 }

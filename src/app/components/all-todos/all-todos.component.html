@@ -1,6 +1,6 @@
 <div class="main-container">
-    <div *ngIf="!loading && !error">
-        <h1>{{ error }}</h1>
+ <h1 *ngIf="error">{{ error }}</h1>
+    <div *ngIf="!error && loading">
         <h1>Todo list</h1>
         <div class="todo-item" *ngFor="let todo of todos">
             <div class="title-box">
